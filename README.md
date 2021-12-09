@@ -125,3 +125,116 @@ npm i axios
 ```
 
 ![image](./images/20211208154413.png)
+
+# 封裝axios
+
+## api.js
+
+```js
+import request from './request'
+
+// 請求首頁數據
+export const GetHomeData = () => request.get('/index/index')
+```
+
+## request.js
+
+```js
+import axios from 'axios'
+
+// 創建一個單例
+const instance = axios.create({
+  baseURL: 'http://kumanxuan1.f3322.net:8001',
+  timeout: 5000
+})
+
+// 請求攔截
+instance.interceptors.request.use(config => {
+  return config
+}, err => {
+  return Promise.reject(err)
+})
+
+// 響應攔截
+instance.interceptors.response.use(res => {
+  return res.data
+}, err => {
+  return Promise.reject(err)
+})
+
+export default instance
+```
+
+# 完成HOME組件搜尋列、輪播圖
+
+Home.vue
+
+```js
+<template>
+  <div class="home">
+    <!-- <van-button type="primary">主要按钮</van-button> -->
+    <van-search
+      v-model="SearchVal"
+      disabled
+      shape="round"
+      background="#fff"
+      placeholder="請輸入搜索關鍵詞"
+      @click="goToPopup"
+    />
+    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="darkred">
+      <van-swipe-item v-for="item in banner" :key="item.id">
+        <img :src="item.image_url" width="100%" style="display: block;" alt="item.name" />
+      </van-swipe-item>
+    </van-swipe>
+
+    <!-- <transition name="slide"> -->
+    <transition name="van-slide-right">
+      <router-view></router-view>
+    </transition>
+  </div>
+</template>
+
+<script>
+import { GetHomeData } from '@/request/api'
+export default {
+  name: 'Home',
+  data() {
+    return {
+      SearchVal: "",
+      // 輪播圖數組
+      banner: [],
+    }
+  },
+  methods: {
+    goToPopup() {
+      this.$router.push('/home/popup')
+    }
+  },
+  created() {
+    // 獲取首頁數據
+    GetHomeData().then(res => {
+      console.log("@@@res", res)
+      if (res.errno == 0) {
+        // 成功獲取到准確的數據
+        console.log("@@@res.data", res)
+        let { banner } = res.data
+        this.banner = banner
+        console.log("@@@banner", banner)
+      }
+    }).catch(err => {
+      console.log("@@@err", err)
+    })
+  },
+
+  components: {
+
+  }
+}
+</script>
+
+<style lang="less" scoped>
+</style>
+
+```
+
+![image](./images/20211209180348.png)
