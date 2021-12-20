@@ -1,12 +1,56 @@
-# Vue電商使用VantUI
+# Vue電商搭配VantUI
 
+![image](./images/20211220103731.png)
+
+# 使用技術
+
+- Vue2
+- vue-router
+- vant-ui
+- axios
+- less
+
+# 頁面展示
+
+首頁
+
+![image](./images/20211220103731.png)
+
+購物車
+
+![image](./images/20211220103755.png)
+
+我的(未登入)
+
+![image](./images/20211220103838.png)
+
+登入彈出頁 
+
+![image](./images/20211220103850.png)
+
+登入(localStorage記錄token及玩家信息)
+
+![image](./images/20211220103859.png)
+
+搜尋頁
+
+![image](./images/20211220103923.png)
+
+點擊搜尋頁上的標籤，進入相關產品列表
+
+![image](./images/20211220103936.png)
+
+依價格排序
+
+![image](./images/20211220103946.png)
+
+依分類排序
+
+![image](./images/20211220103953.png)
 
 # VantUI
 
 https://youzan.github.io/vant/#/zh-CN/
-
-![image](./images/20211208103558.png)
-
 # 創建項目
 
 創建vue2項目
